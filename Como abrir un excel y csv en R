@@ -1,0 +1,19 @@
+#------> Para cargar un
+#-----------> xlsx
+install.packages("readxl")
+library(readxl)# carga una libreria
+
+xlsx<-read_excel(file.choose(),sheet=1)#carga una base de datos
+base=data.frame(xlsx)#guarda la base de datos como dataframe en un objeto
+View(base)#visualiza la base de datos
+names(base)#obtiene los nombres de la base
+dim(base)#obtiene los nombres de la base
+
+
+#------> Para cargar un
+#-----------> csv
+csv=read.csv(file.choose())
+base1=data.frame(csv)
+View(base1)#visualiza la base de datos
+names(base1)#obtiene los nombres de la base
+dim(base1)#obtiene los nombres de la base
