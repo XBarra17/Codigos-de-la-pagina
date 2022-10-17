@@ -1,0 +1,33 @@
+#------> Para cargar un
+#-----------> xlsx
+#install.packages("readxl")	# para instalar una libreria
+library(readxl)# carga una libreria
+
+xlsx<-read_excel(file.choose(),sheet=1)#carga una base de datos
+base=data.frame(xlsx)#guarda la base de datos en una dataframe
+names(base)#obtiene los nombres de la base
+
+base[,2]
+base$Edad
+
+#---------------->Histograma<-----------------------
+dev.new()
+hist(base[,2] 
+     ,ylab = "Frecuencia" 
+     ,xlab="Edad" 
+     ,main = "La edad de los alumnos del curso de R" 
+     ,col = "#7A378B" 
+     ,border = "#00FF00" 
+     ,axes = TRUE 
+     ,label=TRUE
+)
+
+dev.new()
+hist(base[,2] ,ylab = "Frecuencia" ,xlab="Edad" ,main = "Las edad de los alumnos del curso de R",col = "#7A378B",border = "#00FF00" ,axes = TRUE ,label=TRUE)
+dev.new()
+hist(base$Edad ,ylab = "Frecuencia" ,xlab="Edad" ,main = "Las edad de los alumnos del curso de R",col = "#7A378B",border = "#00FF00" ,axes = TRUE ,label=TRUE)
+
+
+
+
+
