@@ -1,0 +1,87 @@
+#------------->Base de datos<-------------
+#ANUIES Anuarios Estadísticos de Educación Superior
+#Descargar la base:http://www.anuies.mx/informacion-y-servicios/informacion-estadistica-de-educacion-superior/anuario-estadistico-de-educacion-superior
+#Fuente:http://www.anuies.mx/informacion-y-servicios/informacion-estadistica-de-educacion-superior/anuario-estadistico-de-educacion-superior
+
+#---------------->CODIGO<-----------------
+
+#install.packages("ggplot2")
+#install.packages("readxl")
+#install.packages("openxlsx")
+library(ggplot2)
+library(readxl)
+library(openxlsx)
+
+#Poner la ruta
+setwd("C:/Users/alex-/Desktop/Bases de datos/Anuario_Educacion_Superior_2020-2021")# Cambiar la Ruta
+
+xlsx<-read_excel(file.choose(),sheet=1)#carga una base de datos
+base=data.frame(xlsx)#guarda la base de datos en una dataframe
+
+nf=dim(base)[[1]]
+nc=dim(base)[[2]]
+
+nom=NULL
+prom=NULL
+sd=NULL
+cv=NULL
+p=NULL
+for(i in 1:nc){
+  if(mode(base[,i])=="numeric"){
+    nom[i]=names(base)[i]
+    prom[i]=round(mean(base[,i]),dig=2)
+    sd[i]=round(sd(base[,i]),dig=2)
+    cv[i]=round(sd(base[,i])/mean(base[,i])*100,dig=2)
+    p[i]=paste("En la variable",nom[i],"tiene un promedio de",prom[i],"con una desviacion estandar de",sd[i],"y un coeficiente de variacion de",paste(cv[i],"%",sep=""))
+  }
+  if(mode(base[,i])=="character"){
+    #
+  }
+  
+}
+
+nom=as.character(na.omit(nom))
+prom=as.numeric(na.omit(prom))
+sd=as.numeric(na.omit(sd))
+cv=as.numeric(na.omit(cv))
+p=as.character(na.omit(p))
+
+mr=data.frame(nom,prom,sd,cv,p)
+colnames(mr)=c("Nombre de la Variable","Promedio","Desviacion Estandar","Coeficiente de Variacion","Descripcion de la Variable")
+write.xlsx(mr, "Estadisticos Descriptivos.xlsx")
+#####################Exportacion de graficos
+
+###Aqui va la ruta de la carpeta prueba
+setwd("C:/Users/alex-/Desktop/Bases de datos/Anuario_Educacion_Superior_2020-2021/Graficos")
+
+col1=c("#030303","#030303","#030303","#030303","#030303","#030303","#CD0000",
+       "#030303","#030303","#030303","#030303","#030303","#030303","#030303","#CD0000",
+       "#030303","#030303","#030303","#030303","#030303","#030303","#030303","#030303",
+       "#030303","#030303","#030303","#030303","#030303","#030303","#EEC900","#030303",
+       "#030303","#030303")
+
+for(i in 2:nc){
+  if(mode(base[,i])=="numeric"){
+    #dev.new()
+    matricula=ggplot(data=base,
+                     aes(y=reorder(base[,1],base[,i]),x=base[,i], fill=base[,1])) + #de mayor a menor de arriba hacia abajo
+      geom_bar(stat="identity",position="dodge",show.legend = TRUE)+
+      geom_text(aes(label = base[,i]), hjust = 0, size = 5) +
+      xlab(names(base)[i])+
+      ylab(names(base)[1])+
+      theme_minimal()+
+      theme(legend.position="none")+
+      scale_fill_manual(values = col1)+
+      #scale_fill_grey()+
+      labs(caption = "Grafico elaborado por X Barra")
+    matricula=matricula+theme(plot.caption = element_text(hjust = -0.10,size =14),panel.grid.major = element_blank(),panel.grid.minor = element_blank())
+    matricula
+    jpeg(paste(paste(paste(i,".-",sep=""),names(base)[i]),".jpeg",sep=""), width = 1200, height = 1200, quality = 250)
+    print(matricula)
+    dev.off()
+  }
+}
+
+
+
+
