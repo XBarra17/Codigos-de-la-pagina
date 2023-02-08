@@ -1,0 +1,40 @@
+#---------------Instalar librerias
+
+#install.packages("readxl")	# para instalar una libreria
+
+#---------------Cargar Librerias
+library(readxl)# carga una libreria
+
+#---------------Cargar la base
+xlsx<-read_excel(file.choose(),sheet=1)#carga una base de datos
+base=data.frame(xlsx)#guarda la base de datos en una dataframe
+str(base)
+
+#Tabla de Frecuencia variables cuantitativas
+table(base$Edad)
+table(base[,2])
+
+install.packages("agricolae")
+library(agricolae)
+
+t=hist(base[,2],plot=FALSE)
+tf=table.freq(t)
+tf
+
+
+#Tabla de Frecuencia variable cualitativa
+table(base$Sexo)
+table(base[,3])
+
+x=table(base$Sexo)/sum(table(base$Sexo))*100
+
+round(x,dig=2)
+
+
+
+
+
+
+
+
+
