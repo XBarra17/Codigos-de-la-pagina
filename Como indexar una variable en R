@@ -1,0 +1,26 @@
+#---------------Link de la Base de datos
+#https://docs.google.com/spreadsheets/d/1abaEBIhbLtHltRM7es19Bvz1oHlGVR6G/edit#gid=859026165
+#---------------Instalar librerias
+
+#install.packages("readxl")	# para instalar una libreria
+
+#---------------Cargar Librerias
+library(readxl)# carga una libreria
+
+#---------------Cargar la base
+xlsx<-read_excel(file.choose(),sheet=1)#carga una base de datos
+base=data.frame(xlsx)#guarda la base de datos en una dataframe
+
+
+#con el simbolo "$"
+str(base)
+base$Edad
+base$Edad
+
+#Con los corchetes y seleccionando el numero de columna
+names(base)
+base[,2]
+base[,2]
+
+#con el comando attach
+attach(base)
