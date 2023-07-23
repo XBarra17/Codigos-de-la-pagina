@@ -1,0 +1,31 @@
+#-------------> Instalación de paqueterías <-------------#
+
+#install.packages("readxl") # para instalar una librería
+
+#-------------> Carga de librerías <-------------#
+
+library(readxl) #carga la librería
+
+#-------------> Cargar la base de datos <-------------#
+
+xlsx<-read_excel(file.choose(),sheet=1) #carga una base de datos
+base=data.frame(xlsx) #guarda la base de datos en una dataframe
+names(base) #obtiene los nombres de la base
+
+#-------------> Grafico de barras con Etiquetas <-------------#
+
+dev.new() #nueva ventana de graficación
+tabla=table(base[,3]) #tabla de frecuencia
+gen=barplot(tabla, #tabla de frecuencia 
+            col=c("#EE6AA7","#B23AEE"), #un color por cada categoría
+            main="Mujeres y Hombres en la clase de R", #titulo del grafico
+            ylab="Frecuencias", #nombre del eje de la y
+            xlab="Genero", #nombre del eje de la x
+            ylim=c(0,30), #limite en el eje de la y
+            las=1, #orientacion de las etiquetas
+            legend.text=c("Femenino", "Masculino")) #cuadro de leyenda
+text(gen, tabla+2, labels = tabla) #(grafico, posición, etiquetas)
+
+
+
+
