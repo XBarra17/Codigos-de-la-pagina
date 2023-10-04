@@ -1,0 +1,28 @@
+#-----> Instalación de paqueterías <-----
+#install.packages("readxl")
+library(readxl)
+#-----> Como abrir un xlsx en R <-----
+xlsx<-read_excel(file.choose(),sheet=1)#carga una base de datos
+base=data.frame(xlsx)#guarda la base de datos en una dataframe
+#names(base)#Nombres de la base de datos
+#str(base)#Estructura
+View(base)#Muestra la base de datos
+#-----> Estadísticos Descriptivos en R <-----
+
+min(base$Edad) #nos regresa el valor mínimo
+max(base$Edad) #nos regresa el valor máximo
+range(base$Edad) #nos muestra el rango de datos
+mean(base$Edad) #saca el promedio
+median(base$Edad) #saca la mediana
+sd(base$Edad) #saca la desviación estándar
+sd(base$Edad)/abs(mean(base$Edad))*100 #saca el coeficiente de variación
+summary(base$Edad) #saca un resumen de la variable
+
+    #-----> Moda <-----
+install.packages("modeest")
+library(modeest)
+mfv(base$Edad) #saca la moda
+
+
+
+
