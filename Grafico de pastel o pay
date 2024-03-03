@@ -1,0 +1,39 @@
+#install.packages("readxl")	# para instalar una libreria
+library(readxl)# carga una libreria
+
+xlsx<-read_excel(file.choose(),sheet=1)#carga una base de datos
+base=data.frame(xlsx)#guarda la base de datos en una dataframe
+str(base)
+
+tabla=table(base[,3])
+x11()
+pie(tabla,#Tabla de Frecuencía 
+    labels = tabla,#Los valores que estan en la tabla de frecuencía 
+    col = c("#CD96CD","#9A32CD"), #Un color por cada categoría
+    cex = 2, #Tamaño de la letra
+    main="Mujeres y Hombres en la clase de R", #titulo del grafico
+    clockwise = TRUE #Orden de las manecillas del reloj
+    )
+#################
+################# Usando la libreria
+#################       lessR
+################# 
+
+install.packages("lessR")
+library(lessR)
+
+x11()
+PieChart(Sexo, #Nombre de la variable
+         hole = 0, 
+         values = "%", #valores en proporcion
+         data = base, #Nombre Base de datos
+         fill = c("#CD96CD","#9A32CD"), #Colores
+         main = "Mujeres y Hombres en la clase de R"
+         )
+
+
+
+
+
+
+
